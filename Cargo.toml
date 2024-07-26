@@ -52,17 +52,17 @@ regex = "1.10.4"
 
 # Substrate-specific crates
 parity-scale-codec = { version = "*", default-features = false }
-sp-core = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.10.0", default-features = false }
-sp-keystore = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.10.0", default-features = false }
-frame-support = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.10.0", default-features = false }
-sp-runtime = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.10.0", default-features = false }
-sp-io = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.10.0", default-features = false }
-frame-system = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.10.0", default-features = false }
-pallet-balances = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.10.0", default-features = false }
-pallet-timestamp = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.10.0", default-features = false }
-pallet-transaction-payment = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.10.0", default-features = false }
-pallet-contracts = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.10.0", default-features = false }
-pallet-insecure-randomness-collective-flip = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "release-polkadot-v1.10.0", default-features = false }
+sp-core = { path = "../parachains/polkadot-sdk/substrate/primitives/core", default-features = false }
+sp-keystore = { path = "../parachains/polkadot-sdk/substrate/primitives/keystore", default-features = false }
+frame-support = { path = "../parachains/polkadot-sdk/substrate/frame/support", default-features = false }
+sp-runtime = { path = "../parachains/polkadot-sdk/substrate/primitives/runtime", default-features = false }
+sp-io = { path = "../parachains/polkadot-sdk/substrate/primitives/io", default-features = false }
+frame-system = { path = "../parachains/polkadot-sdk/substrate/frame/system", default-features = false }
+pallet-balances = { path = "../parachains/polkadot-sdk/substrate/frame/balances", default-features = false }
+pallet-timestamp = { path = "../parachains/polkadot-sdk/substrate/frame/timestamp", default-features = false }
+pallet-transaction-payment = { path = "../parachains/polkadot-sdk/substrate/frame/transaction-payment", default-features = false }
+pallet-contracts = { path = "../parachains/polkadot-sdk/substrate/frame/contracts", default-features = false }
+pallet-insecure-randomness-collective-flip = { path = "../parachains/polkadot-sdk/substrate/frame/insecure-randomness-collective-flip", default-features = false }
 
 # ink! crates
 ink_metadata = { version = "*" }

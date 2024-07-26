@@ -162,6 +162,7 @@ impl pallet_contracts::Config for Runtime {
     type Randomness = Randomness;
     type Currency = Balances;
     type RuntimeEvent = RuntimeEvent;
+    type MaxTransientStorageSize = ConstU32<{ 1 * 1024 * 1024 }>;
     type RuntimeCall = RuntimeCall;
     /// The safest default is to allow no calls at all.
     ///

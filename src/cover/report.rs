@@ -214,6 +214,7 @@ impl CoverageTracker {
                 .process_file(entry.path().as_os_str().to_str().unwrap())
                 .expect("🙅 Cannot process file");
         }
+
         tracker
             .generate_report(config.config.report_path.clone().unwrap().to_str().unwrap())
             .expect("🙅 Cannot generate coverage report");

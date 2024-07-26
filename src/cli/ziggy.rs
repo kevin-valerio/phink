@@ -66,20 +66,26 @@ impl ZiggyConfig {
         let command_arg = Self::command_to_arg(&command)?;
 
         let mut binding = Command::new("cargo");
-        let command_builder = binding
+        let mut command_builder = binding
             .arg("ziggy")
             .arg(command_arg)
             .env("AFL_FORKSRV_INIT_TMOUT", "10000000")
-            .env(
+            .env("AFL_DEBUG", Self::AFL_DEBUG)
+            .stdout(Stdio::piped());
+
+        // Add `AFL_LLVM_ALLOWLIST` if not on macOS
+        // See https://github.com/rust-lang/rust/issues/127573
+        // See https://github.com/rust-lang/rust/issues/127577
+        if cfg!(not(target_os = "macos")) {
+            command_builder = command_builder.env(
                 "AFL_LLVM_ALLOWLIST",
                 Path::new(Self::ALLOWLIST_PATH)
                     .canonicalize()
                     .unwrap()
                     .to_str()
                     .unwrap(),
-            )
-            .env("AFL_DEBUG", Self::AFL_DEBUG)
-            .stdout(Stdio::piped());
+            );
+        }
 
         // If there are additional arguments, pass them to the command
         command_builder.args(args.iter());
