@@ -1,3 +1,0 @@
-fun: redirect_coverage*
-fun: should_stop_now*
-fun: parse_input*
