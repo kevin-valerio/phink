@@ -53,6 +53,8 @@ pub struct Configuration {
     /// involved the four first bytes of the constructor' selector,
     /// followed by the payload.
     pub constructor_payload: Option<String>,
+    /// Make Phink verbose
+    pub verbose: bool,
 }
 
 impl Default for Configuration {
@@ -68,6 +70,7 @@ impl Default for Configuration {
             storage_deposit_limit: None,
             instantiate_initial_value: None,
             constructor_payload: None,
+            verbose: true,
         }
     }
 }

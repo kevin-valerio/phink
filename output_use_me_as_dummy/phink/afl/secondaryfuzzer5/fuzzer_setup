@@ -1,0 +1,19 @@
+# environment variables:
+AFL_AUTORESUME=1
+AFL_CMPLOG_ONLY_NEW=1
+AFL_CUSTOM_INFO_PROGRAM=./target/afl/debug/phink
+AFL_CUSTOM_INFO_PROGRAM_ARGV=
+AFL_CUSTOM_INFO_OUT=./output/phink/afl/secondaryfuzzer5
+AFL_DEBUG=1
+AFL_DISABLE_TRIM=1
+AFL_FAST_CAL=1
+AFL_FORCE_UI=1
+AFL_FUZZER_STATS_UPDATE_INTERVAL=10
+AFL_FORKSRV_INIT_TMOUT=10000000
+AFL_IGNORE_SEED_PROBLEMS=1
+AFL_IGNORE_UNKNOWN_ENVS=1
+AFL_IMPORT_FIRST=1
+AFL_NO_WARN_INSTABILITY=1
+AFL_TESTCACHE_SIZE=100
+# command line:
+'/Users/kevinvalerio/.local/share/afl.rs/rustc-1.82.0-nightly-8bfcae7/afl.rs-0.15.10/afl/bin/afl-fuzz' '-c0' '-Ssecondaryfuzzer5' '-i./output/phink/corpus/' '-pexploit' '-o./output/phink/afl' '-g4' '-G1048576' '-c-' '-P600' '-x./output/phink/selectors.dict' './target/afl/debug/phink'

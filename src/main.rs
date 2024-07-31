@@ -30,6 +30,10 @@ use crate::{
             Instrumenter,
         },
     },
+    PostCLI::{
+        DoFuzz,
+        Exit,
+    },
 };
 
 mod cli;
@@ -89,16 +93,29 @@ struct Contract {
     contract_path: PathBuf,
 }
 
+pub enum PostCLI {
+    DoFuzz,
+    Exit,
+}
+
 fn main() {
-    // We execute `handle_cli()` first, then re-enter into `main()`
-    if let Ok(config_str) = var("PHINK_START_FUZZING_WITH_CONFIG") {
-        Fuzzer::execute_harness(Fuzz, ZiggyConfig::parse(config_str)).unwrap();
-    } else {
-        handle_cli();
+    match handle_cli() {
+        DoFuzz => {
+            if let Ok(config_str) = var("PHINK_START_FUZZING_WITH_CONFIG") {
+                let config = ZiggyConfig::parse(config_str.clone());
+                if config.config.verbose {
+                    println!("🖨️ PHINK_START_FUZZING_WITH_CONFIG = {}", config_str);
+                }
+                Fuzzer::execute_harness(Fuzz, config).unwrap();
+            }
+        }
+        Exit => {
+            println!("Bye! 👋")
+        }
     }
 }
 
-fn handle_cli() {
+fn handle_cli() -> PostCLI {
     let cli = Cli::parse();
     let config = Configuration::load_config(&cli.config);
 
@@ -111,16 +128,22 @@ fn handle_cli() {
                 "🤞 Contract {} has been instrumented and compiled!",
                 contract_path.contract_path.display()
             );
+
+            Exit
         }
         Commands::Fuzz(contract_path) => {
             ZiggyConfig::new(config, contract_path.contract_path)
                 .ziggy_fuzz()
                 .unwrap();
+
+            DoFuzz
         }
         Commands::Run(contract_path) => {
             ZiggyConfig::new(config, contract_path.contract_path)
                 .ziggy_run()
                 .unwrap();
+
+            Exit
         }
         Commands::Execute {
             seed,
@@ -128,20 +151,24 @@ fn handle_cli() {
         } => {
             let ziggy: ZiggyConfig = ZiggyConfig::new(config, contract_path);
             Fuzzer::execute_harness(ExecuteOneInput(seed), ziggy).unwrap();
+            Exit
         }
         Commands::HarnessCover(contract_path) => {
             ZiggyConfig::new(config, contract_path.contract_path)
                 .ziggy_cover()
                 .unwrap();
+            Exit
         }
         Commands::Coverage(contract_path) => {
             CoverageTracker::generate(ZiggyConfig::new(
                 config,
                 contract_path.contract_path,
             ));
+            Exit
         }
         Commands::Clean => {
             Instrumenter::clean().unwrap();
+            Exit
         }
     }
 }

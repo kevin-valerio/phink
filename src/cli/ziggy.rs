@@ -146,7 +146,7 @@ impl ZiggyConfig {
 
         let fuzz_config = vec![(
             "PHINK_START_FUZZING_WITH_CONFIG".to_string(),
-            serde_json::to_string(self)?,
+            serde_json::to_string(&self)?,
         )];
 
         Self::start(ZiggyCommand::Fuzz, fuzzing_args, fuzz_config)
@@ -158,7 +158,7 @@ impl ZiggyConfig {
             vec![],
             vec![(
                 "PHINK_START_FUZZING_WITH_CONFIG".into(),
-                serde_json::to_string(self).unwrap(),
+                serde_json::to_string(&self).unwrap(),
             )],
         )?;
         Ok(())
@@ -170,7 +170,7 @@ impl ZiggyConfig {
             vec![],
             vec![(
                 "PHINK_START_FUZZING_WITH_CONFIG".into(),
-                serde_json::to_string(self).unwrap(),
+                serde_json::to_string(&self).unwrap(),
             )],
         )?;
         Ok(())
