@@ -45,6 +45,7 @@ pub struct ZiggyConfig {
 impl ZiggyConfig {
     pub const ALLOWLIST_PATH: &'static str = "./output/phink/allowlist.txt";
     pub const AFL_DEBUG: &'static str = "1";
+    pub const AFL_FORKSRV_INIT_TMOUT: &'static str = "10000000";
 
     pub fn new(config: Configuration, contract_path: PathBuf) -> Self {
         Self {
@@ -54,7 +55,15 @@ impl ZiggyConfig {
     }
 
     pub fn parse(config_str: String) -> Self {
-        serde_json::from_str(&config_str).expect("❌ Failed to parse config")
+        let config: Self =
+            serde_json::from_str(&config_str).expect("❌ Failed to parse config");
+        println!("tozzz");
+        if config.config.verbose {
+            println!("tozzz");
+
+            println!("🖨️ PHINK_START_FUZZING_WITH_CONFIG = {}", config_str);
+        }
+        config
     }
 
     /// This function execute `cargo ziggy + command + args`
@@ -69,7 +78,7 @@ impl ZiggyConfig {
         let mut command_builder = binding
             .arg("ziggy")
             .arg(command_arg)
-            .env("AFL_FORKSRV_INIT_TMOUT", "10000000")
+            .env("AFL_FORKSRV_INIT_TMOUT", Self::AFL_FORKSRV_INIT_TMOUT)
             .env("AFL_DEBUG", Self::AFL_DEBUG)
             .stdout(Stdio::piped());
 
@@ -146,7 +155,7 @@ impl ZiggyConfig {
 
         let fuzz_config = vec![(
             "PHINK_START_FUZZING_WITH_CONFIG".to_string(),
-            serde_json::to_string(&self)?,
+            serde_json::to_string(self)?,
         )];
 
         Self::start(ZiggyCommand::Fuzz, fuzzing_args, fuzz_config)
@@ -158,7 +167,7 @@ impl ZiggyConfig {
             vec![],
             vec![(
                 "PHINK_START_FUZZING_WITH_CONFIG".into(),
-                serde_json::to_string(&self).unwrap(),
+                serde_json::to_string(self).unwrap(),
             )],
         )?;
         Ok(())
@@ -170,7 +179,7 @@ impl ZiggyConfig {
             vec![],
             vec![(
                 "PHINK_START_FUZZING_WITH_CONFIG".into(),
-                serde_json::to_string(&self).unwrap(),
+                serde_json::to_string(self).unwrap(),
             )],
         )?;
         Ok(())

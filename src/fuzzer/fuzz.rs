@@ -171,13 +171,13 @@ impl FuzzerEngine for Fuzzer {
         // If we are not in fuzzing mode, we save the coverage
         // If you ever wish to have real-time coverage while fuzzing (and a lose
         // of performance) Simply comment out the following line :)
-        #[cfg(not(fuzzing))]
-        {
-            println!("[🚧UPDATE] Adding to the coverage file...");
-            coverage.save().expect("🙅 Cannot save the coverage");
+        // #[cfg(not(fuzzing))]
+        // {
+        println!("[🚧UPDATE] Adding to the coverage file...");
+        coverage.save().expect("🙅 Cannot save the coverage");
 
-            <Fuzzer as FuzzerEngine>::pretty_print(all_msg_responses, decoded_msgs);
-        }
+        <Fuzzer as FuzzerEngine>::pretty_print(all_msg_responses, decoded_msgs);
+        // }
 
         // We now fake the coverage
         coverage.redirect_coverage();

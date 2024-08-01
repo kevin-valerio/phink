@@ -17,6 +17,8 @@ panic = "abort"
 
 [features]
 default = ["std"]
+
+
 std = [
     "pallet-balances/std",
     "pallet-timestamp/std",
@@ -48,10 +50,10 @@ quote = { version = "1.0.36" }
 proc-macro2 = { version = "1.0.81", features = ["span-locations"] }
 rand = { version = "0.8" }
 walkdir = { version = "2.5.0" }
-regex = "1.10.4"
+regex = { version = "1.10.4" }
+parity-scale-codec = { version = "*", default-features = false }
 
 # Substrate-specific crates
-parity-scale-codec = { version = "*", default-features = false }
 sp-core = { path = "../parachains/polkadot-sdk/substrate/primitives/core", default-features = false }
 sp-keystore = { path = "../parachains/polkadot-sdk/substrate/primitives/keystore", default-features = false }
 frame-support = { path = "../parachains/polkadot-sdk/substrate/frame/support", default-features = false }
@@ -63,6 +65,7 @@ pallet-timestamp = { path = "../parachains/polkadot-sdk/substrate/frame/timestam
 pallet-transaction-payment = { path = "../parachains/polkadot-sdk/substrate/frame/transaction-payment", default-features = false }
 pallet-contracts = { path = "../parachains/polkadot-sdk/substrate/frame/contracts", default-features = false }
 pallet-insecure-randomness-collective-flip = { path = "../parachains/polkadot-sdk/substrate/frame/insecure-randomness-collective-flip", default-features = false }
+
 
 # ink! crates
 ink_metadata = { version = "*" }
